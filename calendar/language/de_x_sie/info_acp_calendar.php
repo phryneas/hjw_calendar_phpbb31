@@ -2,7 +2,7 @@
 /**
 *
 * @package hjw calendar Extension
-* @copyright (c) 2014 calendar
+* @copyright (c) 2015 calendar
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -51,6 +51,7 @@ $lang = array_merge($lang, array(
 	'ACP_CALENDAR_BIG'						=> 'Hervorheben',
 	'ACP_CALENDAR_CHANGE'					=> 'ändern',
 	'ACP_CALENDAR_COLOR'					=> 'Farbe',
+	'ACP_CALENDAR_COLOR_B'					=> 'Hintergrundfarbe',
 	'ACP_CALENDAR_DATE'						=> 'Datum (T.M.)',
 	'ACP_CALENDAR_DATE_FROM'				=> 'Von/Am (T.M.JJJJ)',
 	'ACP_CALENDAR_DATE_TO'					=> 'Bis (T.M.JJJJ)',
@@ -69,7 +70,7 @@ $lang = array_merge($lang, array(
 	'ACP_CALENDAR_FORUM_SETTINGS_TEXT'		=> '<br />Nur in den grün gefärbten Foren können Termine angelegt werden.<br /><br />',
 	'ACP_CALENDAR_SETTINGS'					=> 'Einstellungen',
 	'ACP_CALENDAR_INSTRUCTIONS'				=> 'Anleitung',
-	'ACP_CALENDAR_INSTRUCTIONS_TEXT_0'		=> '<br /><br />Es gibt 3 Möglichkeiten den Wochenüberblick zu platzieren:<br /><br />',
+	'ACP_CALENDAR_INSTRUCTIONS_TEXT_0'		=> 'Anzeige des Wochenüberblicks',
 	'ACP_CALENDAR_INSTRUCTIONS_TEXT_1'		=> 'Es gibt zwei Möglichkeiten Kalendereinträge anzulegen.<br />
 												Wenn in dem entsprechende Forum die Termineingabe erlaubt ist und mindestens ein Veranstaltungstyp
 												erstellt ist, gibt es über dem Beitragsformular eine Zeile, in die die entsprechenden Einträge gemacht

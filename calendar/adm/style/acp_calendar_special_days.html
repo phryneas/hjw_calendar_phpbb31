@@ -36,7 +36,14 @@
 							<input name="color" type="text" id="color" value="{COLOR}" size="6" maxlength="6" />
 							<!-- IF COLOR -->&nbsp;<span style="background-color: #{COLOR}">&nbsp; &nbsp;</span><!-- ENDIF -->&nbsp;&nbsp;<span>
 							[	 <a href="#" id="color_palette_toggle">{L_COLOUR_SWATCH}</a> ]</span>
-							<div id="color_palette_placeholder" style="display: none;" data-orientation="h" data-height="12" data-width="15" data-target="#color"></div>
+							<div id="color_palette_placeholder" style="display: none;" data-orientation="h" data-height="12" data-width="12" data-target="#color"></div>
+						</dd>
+					</dl>
+					<dl>
+						<dt style="width:200px"><label for="bcolor">{L_ACP_CALENDAR_COLOR_B}</label></dt>
+						<dd style="margin-left:200px;">
+							<input name="bcolor" type="text" id="bcolor" value="{BCOLOR}" size="6" maxlength="6" />
+							<!-- IF BCOLOR -->&nbsp;<span style="background-color: #{BCOLOR}">&nbsp; &nbsp;</span><!-- ENDIF -->&nbsp;&nbsp;<span>
 						</dd>
 					</dl>
 					<p class="submit-buttons">
@@ -64,10 +71,10 @@
 					<tbody>
 						<!-- BEGIN calendar_special_day -->
 							<tr>
-								<td style="text-align:center;color:#{calendar_special_day.COLOR}">{calendar_special_day.NAME}</td>
-								<td style="text-align:center;color:#{calendar_special_day.COLOR}">{calendar_special_day.EASTERN}</td>
-								<td style="text-align:center;color:#{calendar_special_day.COLOR}">{calendar_special_day.DATE}</td>
-								<td style="text-align:center;color:#{calendar_special_day.COLOR}">{calendar_special_day.SHOW_ON}</td>
+								<td style="text-align:center;color:#{calendar_special_day.COLOR};<!-- IF calendar_special_day.BCOLOR -->background-color:#{calendar_special_day.BCOLOR};border-radius:13px;padding:0 3px;<!-- ENDIF-->">{calendar_special_day.NAME}</td>
+								<td style="text-align:center;color:#{calendar_special_day.COLOR};<!-- IF calendar_special_day.BCOLOR -->background-color:#{calendar_special_day.BCOLOR};border-radius:13px;padding:0 3px;<!-- ENDIF-->">{calendar_special_day.EASTERN}</td>
+								<td style="text-align:center;color:#{calendar_special_day.COLOR};<!-- IF calendar_special_day.BCOLOR -->background-color:#{calendar_special_day.BCOLOR};border-radius:13px;padding:0 3px;<!-- ENDIF-->">{calendar_special_day.DATE}</td>
+								<td style="text-align:center;color:#{calendar_special_day.COLOR};<!-- IF calendar_special_day.BCOLOR -->background-color:#{calendar_special_day.BCOLOR};border-radius:13px;padding:0 3px;<!-- ENDIF-->">{calendar_special_day.SHOW_ON}</td>
 								<td class="actions" style="text-align:center"><a href="{calendar_special_day.U_EDIT}">{ICON_EDIT}</a> <a href="{calendar_special_day.U_DELETE}" data-ajax="row_delete">{ICON_DELETE}</a></td>
 							</tr>
 						<!-- BEGINELSE -->

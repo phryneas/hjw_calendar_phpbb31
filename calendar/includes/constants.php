@@ -2,7 +2,7 @@
 /**
 *
 * @package hjw calendar Extension
-* @copyright (c) 2014 calendar
+* @copyright (c) 2015 calendar
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */

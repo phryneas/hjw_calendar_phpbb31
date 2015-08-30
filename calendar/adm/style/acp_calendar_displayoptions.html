@@ -2,23 +2,55 @@
 <h1>{L_ACP_CALENDAR_SETTINGS}</h1>
 <div style="width:660px;margin:10px 0 20px;"> 
 	<form action="{U_ACTION}" method="POST">
-		{L_ACP_CALENDAR_FOR_GUESTS} :&nbsp;
-		{L_NO} <input type="radio" name="calendar_for_guests" value="0" {CFG0} onchange="this.form.submit();"> &nbsp;
-		{L_YES} <input type="radio" name="calendar_for_guests" value="1" {CFG1} onchange="this.form.submit();"> 
-		<br /><br />
-		{L_ACP_BIRTHDAY_ON_CALENDAR} :&nbsp;
-		{L_NO} <input type="radio" name="birthday_on_calendar" value="0" {BOC0} onchange="this.form.submit();"> &nbsp;
-		{L_YES} <input type="radio" name="birthday_on_calendar" value="1" {BOC1} onchange="this.form.submit();"> 
-		
-		{L_ACP_CALENDAR_INSTRUCTIONS_TEXT_0}
-		<select name="week_on_index" size="1" onchange="this.form.submit();"> 
-			<!-- BEGIN weekblock -->
-				{weekblock.SELECT}
-			<!-- END weekblock -->
-		</select>
-		<br /><br />
-		{L_ACP_CALENDAR_NUMBER_OF_WEEKS}
-		<input type="number" min="1" name="number_of_weeks" value="{NUMBER_OF_WEEKS}" onchange="this.form.submit();" /> 
+		<fieldset>
+			<dl>
+				<dt>
+					{L_ACP_CALENDAR_FOR_GUESTS}
+				</dt>
+				<dd>
+					{L_NO} <input type="radio" name="calendar_for_guests" value="0" {CFG0} onchange="this.form.submit();"> &nbsp;
+					{L_YES} <input type="radio" name="calendar_for_guests" value="1" {CFG1} onchange="this.form.submit();">
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					{L_ACP_BIRTHDAY_ON_CALENDAR} 
+				</dt>
+				<dd>
+					{L_NO} <input type="radio" name="birthday_on_calendar" value="0" {BOC0} onchange="this.form.submit();"> &nbsp;
+					{L_YES} <input type="radio" name="birthday_on_calendar" value="1" {BOC1} onchange="this.form.submit();">
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					{L_ACP_CALENDAR_ONLY_FIRST_POST} 
+				</dt>
+				<dd>
+					{L_NO} <input type="radio" name="calendar_only_first_post" value="0" {COFP0} onchange="this.form.submit();"> &nbsp;
+					{L_YES} <input type="radio" name="calendar_only_first_post" value="1" {COFP1} onchange="this.form.submit();">
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					{L_ACP_CALENDAR_INSTRUCTIONS_TEXT_0}
+				</dt>
+				<dd>
+					<select name="week_on_index" size="1" onchange="this.form.submit();"> 
+					<!-- BEGIN weekblock -->
+						{weekblock.SELECT}
+					<!-- END weekblock -->
+					</select>
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					{L_ACP_CALENDAR_NUMBER_OF_WEEKS}
+				</dt>
+				<dd>
+					<input type="number" min="1" name="number_of_weeks" value="{NUMBER_OF_WEEKS}" onchange="this.form.submit();" /> 
+				</dd>
+			</dl>
+		</fieldset>
 	</form>
 </div>
 <!-- INCLUDE overall_footer.html -->

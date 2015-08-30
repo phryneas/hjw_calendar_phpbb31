@@ -4,6 +4,7 @@
 			<tr>
 				<td style="text-align:center;border:none;">
 					<form action="{U_CALENDAR}" method="POST">
+						<a href="{PREVIOUS}">&lt;&lt;</a>
 						<select name="newmonth" size="1" onchange="this.form.submit();"> 
 							<!-- BEGIN month -->
 								{month.SELECT}
@@ -14,6 +15,7 @@
 								{year.SELECT}
 							<!-- END year -->
 						</select>
+						<a href="{NEXT}">&gt;&gt;</a>
 					</form>	
 					<table class=""style="width:100%;height:10px;">
 						<thead>
@@ -36,9 +38,9 @@
 										{day.cdh.HDAY}
 										<!-- IF day.cdh.EVENT_NAME -->
 											<!-- IF day.cdh.LINK -->
-												<a style="color: #{day.cdh.COLOR}" title="{day.cdh.SUBJECT}" href="{day.cdh.LINK}">{day.cdh.EVENT_NAME}</a><br />
+												<a class="eventbg" style="color:#{day.cdh.COLOR};<!-- IF day.cdh.BCOLOR -->background-color:#{day.cdh.BCOLOR};<!-- ENDIF-->" title="{day.cdh.SUBJECT}" href="{day.cdh.LINK}">{day.cdh.EVENT_NAME}</a><br />
 											<!-- ELSE -->
-												<div style="color: #{day.cdh.COLOR}" title="{day.cdh.SUBJECT}">{day.cdh.EVENT_NAME}</div><br />
+												<span class="eventbg" style="color:#{day.cdh.COLOR};<!-- IF day.cdh.BCOLOR -->background-color:#{day.cdh.BCOLOR};<!-- ENDIF-->" title="{day.cdh.SUBJECT}">{day.cdh.EVENT_NAME}</span><br />
 											<!-- ENDIF -->
 										<!-- ENDIF -->
 									<!-- END day.cdh -->

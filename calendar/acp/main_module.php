@@ -2,7 +2,7 @@
 /**
 *
 * @package hjw calendar Extension
-* @copyright (c) 2014 calendar
+* @copyright (c) 2015 calendar
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -90,6 +90,23 @@ class main_module
 					'CFG0'			=> $cfg0,
 				));
 
+				$config->set('calendar_only_first_post', $request->variable('calendar_only_first_post', $this->config['calendar_only_first_post']));
+				if (($this->config['calendar_only_first_post']) == 1) 
+				{
+					$cofp0 ='';
+					$cofp1 =' checked="checked"';
+				}
+				else
+				{
+					$cofp0 =' checked="checked"';
+					$cofp1 ='';
+				}
+				$this->template->assign_vars(array(
+					'U_ACTION'		=> $this->u_action,
+					'COFP1'			=> $cofp1,
+					'COFP0'			=> $cofp0,
+				));
+
 				$this->tpl_name = 'acp_calendar_displayoptions';
 			break;
 
@@ -106,6 +123,7 @@ class main_module
 							'COLOR' 				=> '',
 							'PARTICIPANTS'			=> 0,
 							'BIG'					=> 0,
+							'BCOLOR' 				=> '',
 							'U_MODIFY'				=> $this->u_action . '&amp;action=create&amp;id=' . $id,
 							'S_EDIT_CALENDAR_EVENT'	=> true,
 						));
@@ -125,6 +143,7 @@ class main_module
 							'COLOR' 				=> $row['color'],
 							'PARTICIPANTS'			=> $row['participants'],
 							'BIG'					=> $row['big'],
+							'BCOLOR' 				=> $row['bcolor'],
 							'U_MODIFY'				=> $this->u_action . '&amp;action=modify&amp;id=' . $row['id'],
 							'S_EDIT_CALENDAR_EVENT'	=> true,
 							));
@@ -141,10 +160,11 @@ class main_module
 
 					case 'modify':
 						$sql_ary = array(
-							'EVENT'					=> utf8_normalize_nfc($request->variable('event', '', true)),
-							'COLOR'					=> $request->variable('color', ''),
-							'PARTICIPANTS'			=> $request->variable('participants', 0),
-							'BIG'					=> $request->variable('big', 0),
+							'EVENT'				=> utf8_normalize_nfc($request->variable('event', '', true)),
+							'COLOR'				=> $request->variable('color', ''),
+							'PARTICIPANTS'		=> $request->variable('participants', 0),
+							'BIG'				=> $request->variable('big', 0),
+							'BCOLOR'			=> $request->variable('bcolor', ''),
 						);
 						$sql = 'UPDATE
 							' . CALENDAR_EVENT_TABLE . '
@@ -155,10 +175,11 @@ class main_module
 			
 					case 'create':
 						$sql_ary = array(
-							'EVENT'			=> utf8_normalize_nfc($request->variable('event', '', true)),
-							'COLOR'			=> $request->variable('color', ''),
-							'PARTICIPANTS'	=> $request->variable('participants', 0),
-							'BIG'			=> $request->variable('big', 0),
+							'EVENT'				=> utf8_normalize_nfc($request->variable('event', '', true)),
+							'COLOR'				=> $request->variable('color', ''),
+							'PARTICIPANTS'		=> $request->variable('participants', 0),
+							'BIG'				=> $request->variable('big', 0),
+							'BCOLOR'			=> $request->variable('bcolor', ''),
 						);
 						$sql = 'INSERT INTO ' . CALENDAR_EVENT_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_ary);
 						$db->sql_query($sql);
@@ -172,17 +193,22 @@ class main_module
 				$result = $db->sql_query($sql);
 				while($row = $db->sql_fetchrow($result))
 				{
-					$event = $row['event'];
 					if ($row['big'] == 1)
 					{
-						$event = '<b>'.$event.'</b>';
+						$b = '<b>';
+						$nb= '</b>';
+					}
+					else
+					{
+						$b = '';
+						$nb= '';
 					}
 					$this->template->assign_block_vars('calendar_events', array(
 						'ID' 			=> $row['id'],
-						'EVENT' 		=> $event,
+						'EVENT' 		=> $b.$row['event'].$nb,
 						'COLOR' 		=> $row['color'],
-						'PARTICIPANTS'	=> $user->lang['ACP_CALENDAR_'.$row['participants'].''],
-						'BIG'			=> $row['big'],
+						'PARTICIPANTS'	=> $b.$user->lang['ACP_CALENDAR_'.$row['participants'].''].$nb,
+						'BCOLOR'		=> $row['bcolor'],
 						'U_EDIT'		=> $this->u_action . '&amp;action=edit&amp;id=' . $row['id'],
 						'U_DELETE'		=> $this->u_action . '&amp;action=delete&amp;id=' . $row['id'],
 					));	
@@ -256,8 +282,8 @@ class main_module
 						}
 						$text = $user->lang['ACP_CALENDAR_ALLOWED_'.$row['allowed'].''].'  > '.$user->lang['ACP_CALENDAR_CHANGE'];
 					}
-					if ($list_row['forum_type'] == 0)	$fcolor="#BBBBBB";								
-					if ($list_row['forum_type'] == 1)	$fcolor=$color;	
+					if ($list_row['forum_type'] == 0)	$fcolor="#BBBBBB";
+					if ($list_row['forum_type'] == 1)	$fcolor=$color;
 				
 					$this->template->assign_block_vars('forum',array(
 						'FORUM'	=> $list_row['padding'].$list_row['forum_name'],
@@ -300,6 +326,7 @@ class main_module
 							'DATE_TO' 				=> '',
 							'COLOR'					=> '',
 							'BIG'					=> 0,
+							'BCOLOR'				=> '',
 							'U_MODIFY'				=> $this->u_action . '&amp;action=create&amp;id=' . $id,
 							'S_EDIT_CALENDAR_EVENT'	=> true,
 						));
@@ -343,6 +370,7 @@ class main_module
 							'DATE_TO' 				=> $date_to,
 							'COLOR'					=> $row['color'],
 							'BIG'					=> $row['big'],	
+							'BCOLOR'					=> $row['bcolor'],
 							'U_MODIFY'				=> $this->u_action . '&amp;action=modify&amp;id=' . $row['id'],
 							'S_EDIT_CALENDAR_EVENT'	=> true,
 						));
@@ -367,6 +395,7 @@ class main_module
 							'DATE_TO' 				=> $to_year.'-'.$to_month.'-'.$to_day,
 							'COLOR'					=> $request->variable('color', ''),
 							'BIG'					=> $request->variable('big', 0),
+							'BCOLOR'				=> $request->variable('bcolor', ''),
 						);
 						$sql = 'UPDATE
 							' . CALENDAR_EVENT_LIST_TABLE . '
@@ -385,6 +414,7 @@ class main_module
 							'DATE_TO' 				=> $to_year.'-'.$to_month.'-'.$to_day,
 							'COLOR'					=> $request->variable('color', ''),
 							'BIG'					=> $request->variable('big', 0),
+							'BCOLOR'				=> $request->variable('bcolor', ''),
 						);
 						$sql = 'INSERT INTO ' . CALENDAR_EVENT_LIST_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_ary);
 						$db->sql_query($sql);
@@ -416,20 +446,26 @@ class main_module
 						$date_to = $to_day.'.'.$to_month.'.';
 						if ($to_year > 0) $date_to .= $to_year;
 					}
-					$appointment = $row['appointment'];
 					if ($row['big'] == 1)
 					{
-						$appointment = '<b>'.$appointment.'</b>';
+						$b = '<b>';
+						$nb= '</b>';
+					}
+					else
+					{
+						$b = '';
+						$nb= '';
 					}
 					$this->template->assign_block_vars('calendar_appointment', array(
 						'ID' 			=> $row['id'],
-						'APPOINTMENT'	=> $appointment,
-						'DESCRIPTION' 	=> $row['description'],
-						'LINK'			=> $row['link'],
-						'ANNIVERSARY' 	=> $user->lang['ACP_CALENDAR_'.$row['anniversary'].''],
-						'DATE_FROM' 	=> $date_from,
-						'DATE_TO' 		=> $date_to,
+						'APPOINTMENT'	=> $b.$row['appointment'].$nb,
+						'DESCRIPTION' 	=> $b.$row['description'].$nb,
+						'LINK'			=> $b.$row['link'].$nb,
+						'ANNIVERSARY' 	=> $b.$user->lang['ACP_CALENDAR_'.$row['anniversary'].''].$nb,
+						'DATE_FROM' 	=> $b.$date_from.$nb,
+						'DATE_TO' 		=> $b.$date_to.$nb,
 						'COLOR'			=> $row['color'],
+						'BCOLOR'		=> $row['bcolor'],
 						'U_EDIT'		=> $this->u_action . '&amp;action=edit&amp;id=' . $row['id'],
 						'U_DELETE'		=> $this->u_action . '&amp;action=delete&amp;id=' . $row['id'],
 					));	
@@ -457,6 +493,7 @@ class main_module
 							'SHOW_ON' 				=> 0,
 							'COLOR'					=> '',
 							'BIG'					=> 0,
+							'BCOLOR'				=> '',
 							'U_MODIFY'				=> $this->u_action . '&amp;action=create&amp;id=' . $id,
 							'S_EDIT_CALENDAR_EVENT'	=> true,
 						));
@@ -483,6 +520,7 @@ class main_module
 							'SHOW_ON' 				=> $row['show_on'],
 							'COLOR'					=> $row['color'],
 							'BIG'					=> $row['big'],
+							'BCOLOR'				=> $row['bcolor'],
 							'U_MODIFY'				=> $this->u_action . '&amp;action=modify&amp;id=' . $row['id'],
 							'S_EDIT_CALENDAR_EVENT'	=> true,
 						));
@@ -506,6 +544,7 @@ class main_module
 							'SHOW_ON' 		=> $request->variable('show_on', 0),
 							'COLOR'			=> $request->variable('color', ''),
 							'BIG'			=> $request->variable('big', 0),
+							'BCOLOR'		=> $request->variable('bcolor', ''),
 						);
 						$sql = 'UPDATE
 							' . CALENDAR_SPECIAL_DAYS_TABLE . '
@@ -522,6 +561,7 @@ class main_module
 							'SHOW_ON' 		=> $request->variable('show_on', 0),
 							'COLOR'			=> $request->variable('color', ''),
 							'BIG'			=> $request->variable('big', 0),
+							'BCOLOR'		=> $request->variable('bcolor', ''),
 						);
 						$sql = 'INSERT INTO ' . CALENDAR_SPECIAL_DAYS_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_ary);
 						$db->sql_query($sql);
@@ -538,19 +578,24 @@ class main_module
 					if ($row['date']) $eastern = '';
 					if ($row['name'] == 'Advent')  $eastern = '';
 					if ($row['name'] == 'Buß- und Bettag')  $eastern = '';
-					$name = $row['name'];
 					if ($row['big'] == 1)
 					{
-						$name = '<b>'.$name.'</b>';
+						$b = '<b>';
+						$nb= '</b>';
+					}
+					else
+					{
+						$b = '';
+						$nb= '';
 					}
 					$this->template->assign_block_vars('calendar_special_day', array(
 						'ID' 			=> $row['id'],
-						'NAME'			=> $name,
-						'EASTERN' 		=> $eastern,
-						'DATE'			=> $row['date'],
-						'SHOW_ON' 		=> $user->lang['ACP_CALENDAR_'.$row['show_on'].''],
+						'NAME'			=> $b.$row['name'].$nb,
+						'EASTERN' 		=> $b.$eastern.$nb,
+						'DATE'			=> $b.$row['date'].$nb,
+						'SHOW_ON' 		=> $b.$user->lang['ACP_CALENDAR_'.$row['show_on'].''].$nb,
 						'COLOR'			=> $row['color'],
-						'BIG'			=> $request->variable('big', 0),
+						'BCOLOR'		=> $row['bcolor'],
 						'U_EDIT'		=> $this->u_action . '&amp;action=edit&amp;id=' . $row['id'],
 						'U_DELETE'		=> $this->u_action . '&amp;action=delete&amp;id=' . $row['id'],
 					));	

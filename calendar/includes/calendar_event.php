@@ -1,4 +1,12 @@
 <?php
+/**
+*
+* @package hjw calendar Extension
+* @copyright (c) 2015 calendar
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+*/
+
 if(!defined('IN_PHPBB'))
 {
 	exit;
@@ -8,9 +16,17 @@ $leap_year = date("L",mktime(0,0,0,1,1,$year));
 
 if (isset($special_day[$month][$day]))
 {
+	if ($sd_bcolor[$month][$day])
+	{
+		$bg = 'background-color:#' . $sd_bcolor[$month][$day] . ';';
+	}
+	else
+	{
+		$bg='';
+	}
 	$this->template->assign_block_vars('day.cdh', array(
-		'HDAY'			=> '<span class="hday" style="color:#'.$sd_color[$month][$day].'">'.$special_day[$month][$day].'</span></div>
-							<span class="shday" style="color:#'.$sd_color[$month][$day].'">'.$special_day[$month][$day].'<br></span>',
+		'HDAY'			=> '<span class="hday eventbg" style="color:#'.$sd_color[$month][$day].';' . $bg . '">'.$special_day[$month][$day].'</span></div>
+							<span class="shday eventbg" style="color:#'.$sd_color[$month][$day].';' . $bg . '">'.$special_day[$month][$day].'<br></span>',
 		));
 }
 else
@@ -91,6 +107,7 @@ while($event_row = $db->sql_fetchrow($event_result))
 			'LINK'			=> $event_row['link'],
 			'EVENT_NAME' 	=> $age,
 			'COLOR' 		=> $event_row['color'],
+			'BCOLOR' 		=> $event_row['bcolor'],
 			'SUBJECT'		=> $subject,
 			));
 	}
@@ -116,7 +133,7 @@ while($event_row = $db->sql_fetchrow($event_result))
 	{
 		if ($row['post_visibility'] == 1)
 		{
-			$user_id = $user->data['user_id'];
+			$user_id = $this->user->data['user_id'];
 			$auth_array = $this->auth->acl_raw_data($user_id, 'f_read', $row['forum_id']);
 			if (isset($auth_array[$user_id][$row['forum_id']]['f_read']) && $auth_array[$user_id][$row['forum_id']]['f_read'])
 			{
@@ -133,20 +150,19 @@ while($event_row = $db->sql_fetchrow($event_result))
 		$result = $db->sql_query($sql);
 		while($row = $db->sql_fetchrow($result))
 		{
-			$event 	= $row['event'];
-			$color 	= $row['color'];
 			if ($row['big'] == 1)
 			{
 				$event_name = '<b>'.$event_name.'</b>';
 			}
-		}
-		$this->template->assign_block_vars('day.cdh', array(
-			'LINK'			=> append_sid($link),
-			'EVENT' 		=> $event,
-			'EVENT_NAME' 	=> $event_name,
-			'COLOR' 		=> $color,
-			'SUBJECT'		=> $subject,
+			$this->template->assign_block_vars('day.cdh', array(
+				'LINK'			=> append_sid($link),
+				'EVENT' 		=> $row['event'],
+				'EVENT_NAME' 	=> $event_name,
+				'COLOR' 		=> $row['color'],
+				'BCOLOR' 		=> $row['bcolor'],
+				'SUBJECT'		=> $subject,
 			));
+		}
 	}
 }
 
@@ -171,7 +187,7 @@ if ($this->config['birthday_on_calendar'] == 1)
 	while($row = $db->sql_fetchrow($result))
 	{
 		$user_name	= $row['username'];
-		$subject = $user->lang['BIRTHDAY'].' '.$user_name;
+		$subject = $this->user->lang['BIRTHDAY'].' '.$user_name;
 		$age = explode ('-',$row['user_birthday']);
 		if ( checkdate($age[1], $age[0], $age[2]) )
 		{

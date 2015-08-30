@@ -2,7 +2,7 @@
 /**
 *
 * @package hjw calendar Extension
-* @copyright (c) 2014 calendar
+* @copyright (c) 2015 calendar
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -68,12 +68,12 @@ class main_listener implements EventSubscriberInterface
 				case 'app':
 				if (strrpos($event['row']['session_page'], '/calendar'))
 				{
-					$event['location'] = $user->lang('VIEWING_CALENDAR');
+					$event['location'] = $this->user->lang('VIEWING_CALENDAR');
 					$event['location_url'] = $this->helper->route('hjw_calendar_controller');
 				}
 				break;
 			}
-	}	
+	}
 
 	public function load_language_on_setup($event)
 	{
@@ -96,7 +96,7 @@ class main_listener implements EventSubscriberInterface
 		$forum_id = $event['row']['forum_id'];
 		$topic_id = $event['row']['topic_id'];
 
-		$date_format  = $user->data['user_dateformat'];
+		$date_format  = $this->user->data['user_dateformat'];
 
 		$number['yes']	= 0;
 		$number['no']	= 0;
@@ -104,12 +104,12 @@ class main_listener implements EventSubscriberInterface
 
 		$this->root_path = $phpbb_root_path . 'ext/hjw/calendar/';
 		include_once($this->root_path . 'includes/constants.' . $phpEx);
-		
+
 		$p_id = $event['cp_row'];
 		$sql = 'SELECT *
 			FROM ' . CALENDAR_TABLE . '
 			WHERE post_id = "' . $post_id.'"';
-				
+
 		$result = $db->sql_query($sql);
 		$event_row = $db->sql_fetchrow($result);
 		$db->sql_freeresult($result);
@@ -125,15 +125,15 @@ class main_listener implements EventSubscriberInterface
 				$cal_date .= ' - ' . $t[2]. '.' . $t[1] . '.' . $t[0];
 			}
 			$link = $phpbb_root_path . 'calendar/?month=' . $f[1] . '&year=' . $f[0];
-			
+
 			$sql = 'SELECT *
 				FROM ' . CALENDAR_EVENT_TABLE . '
 				WHERE id = "' . $event_row['event_id'].'"';
-			
+
 			$result = $db->sql_query($sql);
 			$row = $db->sql_fetchrow($result);
 			$db->sql_freeresult($result);
-			
+
 			if ($row['participants'])
 			{
 				$sql = 'SELECT *
@@ -147,7 +147,7 @@ class main_listener implements EventSubscriberInterface
 					if ($forum_row['allowed'] == 1)
 					{
 						$p_id['row'] = array(
-							'ENTRY'				=>	$user->lang('CALENDAR_ENTRY') . ': ' . $cal_date,
+							'ENTRY'				=>	$this->user->lang('CALENDAR_ENTRY') . ': ' . $cal_date,
 							'LINK'				=>	$link,
 							'PARTICIPANTS_ID'	=>	true,
 							'U_PARTICIPANTS'	=>	append_sid($phpbb_root_path . 'viewtopic.php?f='.$forum_id.'&amp;t='.$topic_id.'#p'.$post_id),
@@ -161,27 +161,27 @@ class main_listener implements EventSubscriberInterface
 							$sql = 'SELECT user_colour, username
 								FROM ' . USERS_TABLE . '
 								WHERE user_id = "' . $part_row['user_id'].'"';
-							$user_result = $db->sql_query($sql);
-							while($user_row = $db->sql_fetchrow($user_result))
+							$this->user_result = $db->sql_query($sql);
+							while($this->user_row = $db->sql_fetchrow($this->user_result))
 							{
 
 								$number[''.$part_row['participants'].''] += (int)$part_row['number'];
 								$r		= explode('-',$part_row['date'].'-0-0');
-								$p_date = $user->create_datetime()
+								$p_date = $this->user->create_datetime()
 									->setDate($r[0], $r[1], $r[2])
 									->setTime($r[3],$r[4], 0)
 									->format($date_format, true);
 
 								$p_id['row']['LIST'][] = array(
-									'PARTICIPANTS_USER'		=> $user_row['username'],
-									'PARTICIPANTS_COLOUR'	=> $user_row['user_colour'],
+									'PARTICIPANTS_USER'		=> $this->user_row['username'],
+									'PARTICIPANTS_COLOUR'	=> $this->user_row['user_colour'],
 									'PARTICIPANTS_NUMBER'	=> $part_row['number'],
-									'PARTICIPANTS_PART'		=> $user->lang['CALENDAR_'.strtoupper($part_row['participants']).''],
+									'PARTICIPANTS_PART'		=> $this->user->lang['CALENDAR_'.strtoupper($part_row['participants']).''],
 									'PARTICIPANTS_COMMENTS'	=> $part_row['comments'],
 									'PARTICIPANTS_DATE'		=> $p_date,
 								);
 							}
-							$db->sql_freeresult($user_result);
+							$db->sql_freeresult($this->user_result);
 						}
 						$p_id['row']['0'] = array(
 							'PARTICIPANTS_COUNT'	=> $number['yes'] . '&nbsp;/&nbsp;' . $number['mb'] . '&nbsp;/&nbsp;' . $number['no'],
@@ -192,7 +192,7 @@ class main_listener implements EventSubscriberInterface
 			else
 			{
 				$p_id['row'] = array(
-					'ENTRY'				=>	$user->lang('CALENDAR_ENTRY') . ': ' . $cal_date,
+					'ENTRY'				=>	$this->user->lang('CALENDAR_ENTRY') . ': ' . $cal_date,
 					'LINK'				=>	$link,
 				);
 			}
@@ -207,6 +207,7 @@ class main_listener implements EventSubscriberInterface
 		$this->php_ex = $phpEx;
 		$this->config = $config;
 		$this->request = $request;
+		$this->user = $user;
 
 		include_once($this->root_path . 'includes/constants.' . $phpEx);
 		$calendar_link	=	$this->helper->route('hjw_calendar_controller');
@@ -225,39 +226,39 @@ class main_listener implements EventSubscriberInterface
 		$year = date("Y"); 
 
 		include($this->root_path . 'includes/special_days.' . $phpEx);
-			
+
 		$month_name = array(
-			1 => $user->lang['datetime']['January'],
-			2 => $user->lang['datetime']['February'],
-			3 => $user->lang['datetime']['March'],
-			4 => $user->lang['datetime']['April'],
-			5 => $user->lang['datetime']['May'],
-			6 => $user->lang['datetime']['June'],
-			7 => $user->lang['datetime']['July'],
-			8 => $user->lang['datetime']['August'],
-			9 => $user->lang['datetime']['September'],
-		   10 => $user->lang['datetime']['October'],
-		   11 => $user->lang['datetime']['November'],
-		   12 => $user->lang['datetime']['December'],
+			1 => $this->user->lang['datetime']['January'],
+			2 => $this->user->lang['datetime']['February'],
+			3 => $this->user->lang['datetime']['March'],
+			4 => $this->user->lang['datetime']['April'],
+			5 => $this->user->lang['datetime']['May'],
+			6 => $this->user->lang['datetime']['June'],
+			7 => $this->user->lang['datetime']['July'],
+			8 => $this->user->lang['datetime']['August'],
+			9 => $this->user->lang['datetime']['September'],
+		   10 => $this->user->lang['datetime']['October'],
+		   11 => $this->user->lang['datetime']['November'],
+		   12 => $this->user->lang['datetime']['December'],
 		);
 
 		$weekday = array(
-			1 => $user->lang['datetime']['Monday'],
-			2 => $user->lang['datetime']['Tuesday'],
-			3 => $user->lang['datetime']['Wednesday'],
-			4 => $user->lang['datetime']['Thursday'],
-			5 => $user->lang['datetime']['Friday'],
-			6 => $user->lang['datetime']['Saturday'],
-			7 => $user->lang['datetime']['Sunday'],
+			1 => $this->user->lang['datetime']['Monday'],
+			2 => $this->user->lang['datetime']['Tuesday'],
+			3 => $this->user->lang['datetime']['Wednesday'],
+			4 => $this->user->lang['datetime']['Thursday'],
+			5 => $this->user->lang['datetime']['Friday'],
+			6 => $this->user->lang['datetime']['Saturday'],
+			7 => $this->user->lang['datetime']['Sunday'],
 		);
 		$wday = array(
-			1 => $user->lang['datetime']['Mon'],
-			2 => $user->lang['datetime']['Tue'],
-			3 => $user->lang['datetime']['Wed'],
-			4 => $user->lang['datetime']['Thu'],
-			5 => $user->lang['datetime']['Fri'],
-			6 => $user->lang['datetime']['Sat'],
-			7 => $user->lang['datetime']['Sun'],
+			1 => $this->user->lang['datetime']['Mon'],
+			2 => $this->user->lang['datetime']['Tue'],
+			3 => $this->user->lang['datetime']['Wed'],
+			4 => $this->user->lang['datetime']['Thu'],
+			5 => $this->user->lang['datetime']['Fri'],
+			6 => $this->user->lang['datetime']['Sat'],
+			7 => $this->user->lang['datetime']['Sun'],
 		);
 		$c_days = ($this->config['number_of_weeks']*7)-1;
 		for ($y=0;$y<=$c_days;$y++)
@@ -334,6 +335,8 @@ class main_listener implements EventSubscriberInterface
 		$this->root_path = $phpbb_root_path . 'ext/hjw/calendar/';
 		$this->php_ex = $phpEx;
 		$this->request = $request;
+		$this->user = $user;
+		
 		$user_id  = $user->data['user_id'];
 		include_once($this->root_path . 'includes/constants.' . $phpEx);
 		if ($request->variable('part', ''))
@@ -369,187 +372,212 @@ class main_listener implements EventSubscriberInterface
 
 	public function calendar($event)
 	{ 
-		global $phpbb_root_path, $phpbb_extension_manager, $phpbb_path_helper, $template, $db, $phpEx, $user, $request;
+		global $phpbb_root_path, $phpbb_extension_manager, $phpbb_path_helper, $template, $db, $phpEx, $user, $request, $config;
 		$this->request = $request;
-
+		$this->config = $config;
+		$this->user = $user;
 		$this->root_path = $phpbb_root_path . 'ext/hjw/calendar/';
+
 		include($this->root_path . 'includes/constants.' . $phpEx);
 
 		$post_id = $event['post_id'];
+
 		$forum_id = $event['forum_id'];
-		
-		$preview	= (isset($_POST['preview'])) ? true : false;
-		
-		$sql = 'SELECT *
-			FROM ' . CALENDAR_FORUMS_TABLE . '
-			WHERE forum_id = "' . $forum_id.'"';
-		$result = $db->sql_query($sql);
-		$forum_row = $db->sql_fetchrow($result);
-		$db->sql_freeresult($result);
-		if ($forum_row)
+
+		$first_post_id = 0;
+		if (isset($event['post_data']['topic_first_post_id']))
 		{
-			if ($forum_row['allowed'] == 1)
+			$first_post_id = $event['post_data']['topic_first_post_id'];
+		}
+		$first_post = false;
+		if ($first_post_id == 0)
+		{
+			$first_post = true;
+		}
+		else
+		{
+			if($first_post_id == $event['post_id'])
 			{
-				$this->template->assign_vars( array(
-					'CALENDAR_ALLOWED'			=> true,
-				));	
-			
-				$month_name = array(
-					1 => $user->lang['datetime']['January'],
-					2 => $user->lang['datetime']['February'],
-					3 => $user->lang['datetime']['March'],
-					4 => $user->lang['datetime']['April'],
-					5 => $user->lang['datetime']['May'],
-					6 => $user->lang['datetime']['June'],
-					7 => $user->lang['datetime']['July'],
-					8 => $user->lang['datetime']['August'],
-					9 => $user->lang['datetime']['September'],
-				   10 => $user->lang['datetime']['October'],
-				   11 => $user->lang['datetime']['November'],
-				   12 => $user->lang['datetime']['December'],
-				);
-		
-				$event_id 	= '';
-				$event_name	= '';
-				$from 		= '';
-				$r			= '';
-				$from_year	= '';
-				$from_month = '';
-				$from_day	= '';
-				$to 		= '';
-				$r			= '';
-				$to_year	= '';
-				$to_month 	= '';
-				$to_day		= '';
+				$first_post = true;
+			}
+		}
 
-				if ($post_id)
+		if ($this->config['calendar_only_first_post'] && !$first_post)
+		{
+		}
+		else
+		{
+			$sql = 'SELECT *
+				FROM ' . CALENDAR_FORUMS_TABLE . '
+				WHERE forum_id = "' . $forum_id.'"';
+			$result = $db->sql_query($sql);
+			$forum_row = $db->sql_fetchrow($result);
+			$db->sql_freeresult($result);
+			if ($forum_row)
+			{
+				if ($forum_row['allowed'] == 1)
 				{
-					$sql = 'SELECT *
-						FROM ' . CALENDAR_TABLE . '
-							WHERE post_id = ' . $post_id;
-					$result = $db->sql_query($sql);
-					$row = $db->sql_fetchrow($result);
-					if($row)
+					$this->template->assign_vars( array(
+						'CALENDAR_ALLOWED'			=> true,
+					));	
+
+					$month_name = array(
+						1 => $this->user->lang['datetime']['January'],
+						2 => $this->user->lang['datetime']['February'],
+						3 => $this->user->lang['datetime']['March'],
+						4 => $this->user->lang['datetime']['April'],
+						5 => $this->user->lang['datetime']['May'],
+						6 => $this->user->lang['datetime']['June'],
+						7 => $this->user->lang['datetime']['July'],
+						8 => $this->user->lang['datetime']['August'],
+						9 => $this->user->lang['datetime']['September'],
+					   10 => $this->user->lang['datetime']['October'],
+					   11 => $this->user->lang['datetime']['November'],
+					   12 => $this->user->lang['datetime']['December'],
+					);
+
+					$event_id 	= '';
+					$event_name	= '';
+					$from 		= '';
+					$r			= '';
+					$from_year	= '';
+					$from_month = '';
+					$from_day	= '';
+					$to 		= '';
+					$r			= '';
+					$to_year	= '';
+					$to_month 	= '';
+					$to_day		= '';
+
+					if ($post_id)
 					{
-						$present=true;
-						$event_id 	= $row['event_id'];
-						$event_name	= $row['event_name'];
-						$from 		= $row['date_from'];
-						$r			= explode('-',$from);
-						$from_year	= $r[0];
-						$from_month = $r[1];
-						$from_day	= $r[2];
-						$to 		= $row['date_to'];
-						$r			= explode('-',$to);
-						$to_year	= $r[0];
-						$to_month 	= $r[1];
-						$to_day		= $r[2];
+						$sql = 'SELECT *
+							FROM ' . CALENDAR_TABLE . '
+								WHERE post_id = ' . $post_id;
+						$result = $db->sql_query($sql);
+						$row = $db->sql_fetchrow($result);
+						if($row)
+						{
+							$present	= true;
+							$event_id 	= $row['event_id'];
+							$event_name	= $row['event_name'];
+							$from 		= $row['date_from'];
+							$r			= explode('-',$from);
+							$from_year	= $r[0];
+							$from_month = $r[1];
+							$from_day	= $r[2];
+							$to 		= $row['date_to'];
+							$r			= explode('-',$to);
+							$to_year	= $r[0];
+							$to_month 	= $r[1];
+							$to_day		= $r[2];
+						}
 					}
-				}
-				
-				$event_id	= $request->variable('event', $event_id);
-				$event_name	= $request->variable('event_name', $event_name);
-				$from_day	= str_pad($request->variable('from_day',	$from_day),		2 ,'0', STR_PAD_LEFT);
-				$from_month	= str_pad($request->variable('from_month',	$from_month),	2 ,'0', STR_PAD_LEFT);
-				$from_year	= str_pad($request->variable('from_year',	$from_year),	4 ,'0', STR_PAD_LEFT);
-				$to_day		= str_pad($request->variable('to_day',		$to_year),		2 ,'0', STR_PAD_LEFT);
-				$to_month	= str_pad($request->variable('to_month',	$to_month),		2 ,'0', STR_PAD_LEFT);
-				$to_year	= str_pad($request->variable('to_year',		$to_year),		4 ,'0', STR_PAD_LEFT);
-				$from		= $from_year.'-'.$from_month.'-'.$from_day;
-				$to			= $to_year.'-'.$to_month.'-'.$to_day;
-				
-				$this->template->assign_vars(array(
-					'EVENT_NAME' => $event_name,
-				));	
-		
-				$this->template->assign_block_vars('from_day', array(
-					'SELECT' =>'<option value=" ">'.$user->lang['DAY'].'</option>',
-				));	
-				
-				for ($i=1;$i<=31;$i++)
-				{
-					$s='';if ($i == $from_day) $s=' selected="selected"';  
+
+					$event_id	= $request->variable('event', $event_id);
+					$event_name	= $request->variable('event_name', $event_name);
+					$from_day	= str_pad($request->variable('from_day',	$from_day),		2 ,'0', STR_PAD_LEFT);
+					$from_month	= str_pad($request->variable('from_month',	$from_month),	2 ,'0', STR_PAD_LEFT);
+					$from_year	= str_pad($request->variable('from_year',	$from_year),	4 ,'0', STR_PAD_LEFT);
+					$to_day		= str_pad($request->variable('to_day',		$to_year),		2 ,'0', STR_PAD_LEFT);
+					$to_month	= str_pad($request->variable('to_month',	$to_month),		2 ,'0', STR_PAD_LEFT);
+					$to_year	= str_pad($request->variable('to_year',		$to_year),		4 ,'0', STR_PAD_LEFT);
+					$from		= $from_year.'-'.$from_month.'-'.$from_day;
+					$to			= $to_year.'-'.$to_month.'-'.$to_day;
+
+					$this->template->assign_vars(array(
+						'EVENT_NAME' => $event_name,
+					));	
+
 					$this->template->assign_block_vars('from_day', array(
-						'SELECT' =>'<option'.$s.' value="'.$i.'">'.$i.'</option>',
+						'SELECT' =>'<option value=" ">'.$this->user->lang['DAY'].'</option>',
 					));	
-				}
-		
-				$this->template->assign_block_vars('to_day', array(
-					'SELECT' =>'<option value=" ">'.$user->lang['DAY'].'</option>',
-				));	
 
-				for ($i=1;$i<=31;$i++)
-				{
-					$s='';if ($i == $to_day) $s=' selected="selected"';  
+					for ($i=1;$i<=31;$i++)
+					{
+						$s='';if ($i == $from_day) $s=' selected="selected"';  
+						$this->template->assign_block_vars('from_day', array(
+							'SELECT' =>'<option'.$s.' value="'.$i.'">'.$i.'</option>',
+						));	
+					}
+
 					$this->template->assign_block_vars('to_day', array(
-						'SELECT' =>'<option'.$s.' value="'.$i.'">'.$i.'</option>',
+						'SELECT' =>'<option value=" ">'.$this->user->lang['DAY'].'</option>',
 					));	
-				}
 
-				$this->template->assign_block_vars('from_month', array(
-					'SELECT' =>'<option value=" ">'.$user->lang['MONTH'].'</option>',
-				));	
+					for ($i=1;$i<=31;$i++)
+					{
+						$s='';if ($i == $to_day) $s=' selected="selected"';  
+						$this->template->assign_block_vars('to_day', array(
+							'SELECT' =>'<option'.$s.' value="'.$i.'">'.$i.'</option>',
+						));	
+					}
 
-				for ($i=1;$i<=12;$i++)
-				{
-					$s='';if ($i == $from_month) $s=' selected="selected"';  
 					$this->template->assign_block_vars('from_month', array(
-						'SELECT' =>'<option'.$s.' value="'.$i.'">'.$month_name[$i].'</option>',
+						'SELECT' =>'<option value=" ">'.$this->user->lang['MONTH'].'</option>',
 					));	
-				}
 
-				$this->template->assign_block_vars('to_month', array(
-					'SELECT' =>'<option value=" ">'.$user->lang['MONTH'].'</option>',
-				));	
+					for ($i=1;$i<=12;$i++)
+					{
+						$s='';if ($i == $from_month) $s=' selected="selected"';  
+						$this->template->assign_block_vars('from_month', array(
+							'SELECT' =>'<option'.$s.' value="'.$i.'">'.$month_name[$i].'</option>',
+						));	
+					}
 
-				for ($i=1;$i<=12;$i++)
-				{
-					$s='';if ($i == $to_month) $s=' selected="selected"';  
 					$this->template->assign_block_vars('to_month', array(
-						'SELECT' =>'<option'.$s.' value="'.$i.'">'.$month_name[$i].'</option>',
+						'SELECT' =>'<option value=" ">'.$this->user->lang['MONTH'].'</option>',
 					));	
-				}
 
-				$date = getdate();
-				$year=$date['year']*1;
-				if ($from_year > 0) $year = $from_year;
-				$this->template->assign_block_vars('from_year', array(
-					'SELECT' =>'<option value=" ">'.$user->lang['YEAR'].'</option>',
-				));	
+					for ($i=1;$i<=12;$i++)
+					{
+						$s='';if ($i == $to_month) $s=' selected="selected"';  
+						$this->template->assign_block_vars('to_month', array(
+							'SELECT' =>'<option'.$s.' value="'.$i.'">'.$month_name[$i].'</option>',
+						));	
+					}
 
-				for ($i=$year;$i<$year+10;$i++)
-				{
-					$s='';if ($i == $from_year) $s=' selected="selected"';  
+					$date = getdate();
+					$year=$date['year']*1;
+					if ($from_year > 0) $year = $from_year;
 					$this->template->assign_block_vars('from_year', array(
-						'SELECT' =>'<option'.$s.' value="'.$i.'">'.$i.'</option>',
+						'SELECT' =>'<option value=" ">'.$this->user->lang['YEAR'].'</option>',
 					));	
-				}
-		
-				$this->template->assign_block_vars('to_year', array(
-					'SELECT' =>'<option value=" ">'.$user->lang['YEAR'].'</option>',
-				));	
 
-				for ($i=$year;$i<$year+10;$i++)
-				{
-					$s='';if ($i == $to_year) $s=' selected="selected"';  
+					for ($i=$year;$i<$year+10;$i++)
+					{
+						$s='';if ($i == $from_year) $s=' selected="selected"';  
+						$this->template->assign_block_vars('from_year', array(
+							'SELECT' =>'<option'.$s.' value="'.$i.'">'.$i.'</option>',
+						));	
+					}
+
 					$this->template->assign_block_vars('to_year', array(
-						'SELECT' =>'<option'.$s.' value="'.$i.'">'.$i.'</option>',
+						'SELECT' =>'<option value=" ">'.$this->user->lang['YEAR'].'</option>',
 					));	
-				}
 
-				$this->template->assign_block_vars('eventselect', array(
-					'SELECT' =>'<option value=" "> </option>',
-				));	
-		
-				$sql = 'SELECT *
-					FROM ' . CALENDAR_EVENT_TABLE;
-				$result = $db->sql_query($sql);
-				while($row = $db->sql_fetchrow($result))
-				{
-					$s='';if ($row['id']*1 == $event_id*1) $s=' selected="selected"';  
+					for ($i=$year;$i<$year+10;$i++)
+					{
+						$s='';if ($i == $to_year) $s=' selected="selected"';  
+						$this->template->assign_block_vars('to_year', array(
+							'SELECT' =>'<option'.$s.' value="'.$i.'">'.$i.'</option>',
+						));	
+					}
+
 					$this->template->assign_block_vars('eventselect', array(
-						'SELECT' =>'<option'.$s.' value="'.$row['id'].'">'.$row['event'].'</option>',
-					));
+						'SELECT' =>'<option value=" "> </option>',
+					));	
+
+					$sql = 'SELECT *
+						FROM ' . CALENDAR_EVENT_TABLE;
+					$result = $db->sql_query($sql);
+					while($row = $db->sql_fetchrow($result))
+					{
+						$s='';if ($row['id']*1 == $event_id*1) $s=' selected="selected"';  
+						$this->template->assign_block_vars('eventselect', array(
+							'SELECT' =>'<option'.$s.' value="'.$row['id'].'">'.$row['event'].'</option>',
+						));
+					}
 				}
 			}
 		}
@@ -559,26 +587,30 @@ class main_listener implements EventSubscriberInterface
 	{
 		global $phpbb_root_path, $phpbb_extension_manager, $phpbb_path_helper, $template, $db, $phpEx, $user, $request;
 		$this->request = $request;
+		$this->user = $user;
 		$this->root_path = $phpbb_root_path . 'ext/hjw/calendar/';
+
 		include($this->root_path . 'includes/constants.' . $phpEx);
+
 		$post_id = $event['data']['post_id'];
 
-		$present = false;
-		$e_id	=	'';
-		$e_n	=	'';
-		$f		=	'';
-		$t		=	'';
+		$present 	= false;
+		$e_id		=	'';
+		$e_n		=	'';
+		$f			=	'';
+		$t			=	'';
+		
 		$sql = 'SELECT *
 			FROM ' . CALENDAR_TABLE . '
 				WHERE post_id = ' . $post_id;
 		$result = $db->sql_query($sql);
 		if($row = $db->sql_fetchrow($result))
 		{
-			$present=true;
-			$e_id	=	$row['event_id'];
-			$e_n	=	$row['event_name'];
-			$f		=	explode('-',$row['date_from']);
-			$t		=	explode('-',$row['date_to']);
+			$present	= true;
+			$e_id		= $row['event_id'];
+			$e_n		= $row['event_name'];
+			$f			= explode('-',$row['date_from']);
+			$t			= explode('-',$row['date_to']);
 		}
 		$event_id	= $request->variable('event', $e_id);
 		$event_name	= utf8_normalize_nfc($request->variable('event_name', $e_n, true));
@@ -598,7 +630,7 @@ class main_listener implements EventSubscriberInterface
 			'DATE_FROM'			=> $from,
 			'DATE_TO'			=> $to,
 		);
-			
+
 		if ($present & $event_id == '')
 			{
 			$sql = 'DELETE FROM ' . CALENDAR_TABLE . " 

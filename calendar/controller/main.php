@@ -2,7 +2,7 @@
 /**
 *
 * @package hjw calendar Extension
-* @copyright (c) 2014 calendar
+* @copyright (c) 2015 calendar
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -38,7 +38,7 @@ class main
 	* @param \phpbb\config\config		$config
 	* @param \phpbb\controller\helper	$helper
 	* @param \phpbb\template\template	$template
-	* @param \phpbb\user				$user
+	* @param \phpbb\user				$this->user
 	*/
 
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\controller\helper $helper, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user)
@@ -74,35 +74,35 @@ class main
 		$this->user->add_lang_ext('hjw/calendar', 'calendar');
 
 		$month_name = array(
-			1 => $user->lang['datetime']['January'],
-			2 => $user->lang['datetime']['February'],
-			3 => $user->lang['datetime']['March'],
-			4 => $user->lang['datetime']['April'],
-			5 => $user->lang['datetime']['May'],
-			6 => $user->lang['datetime']['June'],
-			7 => $user->lang['datetime']['July'],
-			8 => $user->lang['datetime']['August'],
-			9 => $user->lang['datetime']['September'],
-		   10 => $user->lang['datetime']['October'],
-		   11 => $user->lang['datetime']['November'],
-		   12 => $user->lang['datetime']['December'],
+			1 => $this->user->lang['datetime']['January'],
+			2 => $this->user->lang['datetime']['February'],
+			3 => $this->user->lang['datetime']['March'],
+			4 => $this->user->lang['datetime']['April'],
+			5 => $this->user->lang['datetime']['May'],
+			6 => $this->user->lang['datetime']['June'],
+			7 => $this->user->lang['datetime']['July'],
+			8 => $this->user->lang['datetime']['August'],
+			9 => $this->user->lang['datetime']['September'],
+		   10 => $this->user->lang['datetime']['October'],
+		   11 => $this->user->lang['datetime']['November'],
+		   12 => $this->user->lang['datetime']['December'],
 		);
 				
 		$this->template->assign_vars( array(
-			'MONDAY' 	=> $user->lang['datetime']['Monday'],
-			'TUESDAY' 	=> $user->lang['datetime']['Tuesday'],
-			'WEDNESDAY' => $user->lang['datetime']['Wednesday'],
-			'THURSDAY' 	=> $user->lang['datetime']['Thursday'],
-			'FRIDAY' 	=> $user->lang['datetime']['Friday'],
-			'SATURDAY' 	=> $user->lang['datetime']['Saturday'],
-			'SUNDAY' 	=> $user->lang['datetime']['Sunday'],
-			'MON' 		=> $user->lang['datetime']['Mon'],
-			'TUE' 		=> $user->lang['datetime']['Tue'],
-			'WED' 		=> $user->lang['datetime']['Wed'],
-			'THU' 		=> $user->lang['datetime']['Thu'],
-			'FRI' 		=> $user->lang['datetime']['Fri'],
-			'SAT' 		=> $user->lang['datetime']['Sat'],
-			'SUN' 		=> $user->lang['datetime']['Sun'],
+			'MONDAY' 	=> $this->user->lang['datetime']['Monday'],
+			'TUESDAY' 	=> $this->user->lang['datetime']['Tuesday'],
+			'WEDNESDAY' => $this->user->lang['datetime']['Wednesday'],
+			'THURSDAY' 	=> $this->user->lang['datetime']['Thursday'],
+			'FRIDAY' 	=> $this->user->lang['datetime']['Friday'],
+			'SATURDAY' 	=> $this->user->lang['datetime']['Saturday'],
+			'SUNDAY' 	=> $this->user->lang['datetime']['Sunday'],
+			'MON' 		=> $this->user->lang['datetime']['Mon'],
+			'TUE' 		=> $this->user->lang['datetime']['Tue'],
+			'WED' 		=> $this->user->lang['datetime']['Wed'],
+			'THU' 		=> $this->user->lang['datetime']['Thu'],
+			'FRI' 		=> $this->user->lang['datetime']['Fri'],
+			'SAT' 		=> $this->user->lang['datetime']['Sat'],
+			'SUN' 		=> $this->user->lang['datetime']['Sun'],
 		));	
 			
 		$today = date("Y-n-j");
@@ -161,8 +161,8 @@ class main
 				));	
 			}
 
-		$wd = date("N", mktime(0, 0, 0, $month, 1, $year));		
-		$ml = date("t", mktime(0, 0, 0, $month, 1, $year));		
+		$wd = date("N", mktime(0, 0, 0, $month, 1, $year));
+		$ml = date("t", mktime(0, 0, 0, $month, 1, $year));
 		$a=$wd-1;
 
 		$end = $ml+$a;

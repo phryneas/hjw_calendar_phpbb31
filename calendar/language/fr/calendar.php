@@ -3,7 +3,7 @@
 /**
 *
 * @package hjw calendar Extension
-* @copyright (c) 2014 calendar
+* @copyright (c) 2015 calendar
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -55,7 +55,6 @@ $lang = array_merge($lang, array(
 	'CALENDAR_PART'				=> 'Participe',
 	'CALENDAR_RESET'			=> 'Reset',
 	'CALENDAR_SEND'				=> 'Envoyer',
-	'CALENDAR_SETTINGS'			=> 'Paramètres Calendrier',
 	'CALENDAR_TITLE'			=> 'Calendrier',
 	'CALENDAR_TO'				=> 'à',
 	'CALENDAR_USERS'			=> 'Nom',

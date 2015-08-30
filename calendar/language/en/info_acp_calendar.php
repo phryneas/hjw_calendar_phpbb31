@@ -2,7 +2,7 @@
 /**
 *
 * @package hjw calendar Extension
-* @copyright (c) 2014 calendar
+* @copyright (c) 2015 calendar
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -47,10 +47,11 @@ $lang = array_merge($lang, array(
 												year in question. Unless you make a checkmark for anniversary. 
 												Then the Date will be displayed each year with the number of past years.<br />
 												<br />If you specify without year the date is shown every year.<br /><br />',
-	'ACP_CALENDAR_APPOINTMENT_NAME'			=> 'Appointment-Name',
+	'ACP_CALENDAR_APPOINTMENT_NAME'			=> 'Appointment Name',
 	'ACP_CALENDAR_BIG'						=> 'Highlighted',
 	'ACP_CALENDAR_CHANGE'					=> 'change',
-	'ACP_CALENDAR_COLOR'					=> 'Color',
+	'ACP_CALENDAR_COLOR'					=> 'Colour',
+	'ACP_CALENDAR_COLOR_B'					=> 'Background Colour',
 	'ACP_CALENDAR_DATE'						=> 'Datum (D.M.)',
 	'ACP_CALENDAR_DATE_FROM'				=> 'From (D.M.YYYY)',
 	'ACP_CALENDAR_DATE_TO'					=> 'To (D.M.YYYY)',
@@ -69,7 +70,7 @@ $lang = array_merge($lang, array(
 	'ACP_CALENDAR_FORUM_SETTINGS_TEXT'		=> '<br />Only in the green colored Forums can appointments be created.<br /><br />',
 	'ACP_CALENDAR_SETTINGS'					=> 'Settings',
 	'ACP_CALENDAR_INSTRUCTIONS'				=> 'Instructions',
-	'ACP_CALENDAR_INSTRUCTIONS_TEXT_0'		=> '<br /><br />There are 3 ways to place the weekly review:<br /><br />',
+	'ACP_CALENDAR_INSTRUCTIONS_TEXT_0'		=> 'Display of the week',
 	'ACP_CALENDAR_INSTRUCTIONS_TEXT_1'		=> 'There are two ways to create calendar entries.<br />
 												If in the appropriate forum the calendar entry is allowed and at least one event 
 												type was created, there are over the posting-box input fields in which the 

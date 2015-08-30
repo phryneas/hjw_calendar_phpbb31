@@ -2,7 +2,7 @@
 /**
 *
 * @package hjw calendar Extension
-* @copyright (c) 2014 calendar
+* @copyright (c) 2015 calendar
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -51,6 +51,7 @@ $lang = array_merge($lang, array(
 	'ACP_CALENDAR_BIG'						=> 'Highlighted',
 	'ACP_CALENDAR_CHANGE'					=> 'changement',
 	'ACP_CALENDAR_COLOR'					=> 'Couleur',
+	'ACP_CALENDAR_COLOR_B'					=> 'Couleur de fond',
 	'ACP_CALENDAR_DATE'						=> 'Données (J.M.)',
 	'ACP_CALENDAR_DATE_FROM'				=> 'De (J.M.AAAA)',
 	'ACP_CALENDAR_DATE_TO'					=> 'à (J.M.AAAA)',
@@ -69,7 +70,7 @@ $lang = array_merge($lang, array(
 	'ACP_CALENDAR_FORUM_SETTINGS_TEXT'		=> '<br />Les rendez vous peuvent seulement être créés dans les forums de couleur verte.<br /><br />',
 	'ACP_CALENDAR_SETTINGS'					=> 'Settings',
 	'ACP_CALENDAR_INSTRUCTIONS'				=> 'Instructions',
-	'ACP_CALENDAR_INSTRUCTIONS_TEXT_0'		=> '<br /><br />Il y a trois façons de placer l\'aperçu hebdomadaire:<br /><br />',
+	'ACP_CALENDAR_INSTRUCTIONS_TEXT_0'		=> 'Affichage of de la semaine',
 	'ACP_CALENDAR_INSTRUCTIONS_TEXT_1'		=> 'Il y a deux façons de créer des entrées dans le calendrier.<br />
 												Si dans le forum approprié l\'ajout de rendez-vous dans le calendrier est autorisée et au moins un type d\'événement 
 												a été créé, il n\'y a plus les boites de saisie d\'entrée dans laquelle les événements 

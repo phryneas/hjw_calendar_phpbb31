@@ -16,11 +16,11 @@
 							<!-- BEGIN day.cdh -->
 								{day.cdh.HDAY}
 								<!-- IF day.cdh.EVENT_NAME -->
-									<!-- IF day.cdh.LINK -->
-										<a style="color: #{day.cdh.COLOR}" title="{day.cdh.SUBJECT}" href="{day.cdh.LINK}">{day.cdh.EVENT_NAME}</a><br />
-									<!-- ELSE -->
-										<div style="color: #{day.cdh.COLOR}" title="{day.cdh.SUBJECT}">{day.cdh.EVENT_NAME}</div><br />
-									<!-- ENDIF -->
+										<!-- IF day.cdh.LINK -->
+											<a class="eventbg" style="color:#{day.cdh.COLOR};<!-- IF day.cdh.BCOLOR -->background-color:#{day.cdh.BCOLOR};<!-- ENDIF-->" title="{day.cdh.SUBJECT}" href="{day.cdh.LINK}">{day.cdh.EVENT_NAME}</a><br />
+										<!-- ELSE -->
+											<span class="eventbg" style="color:#{day.cdh.COLOR};<!-- IF day.cdh.BCOLOR -->background-color:#{day.cdh.BCOLOR};<!-- ENDIF-->" title="{day.cdh.SUBJECT}">{day.cdh.EVENT_NAME}</span><br />
+										<!-- ENDIF -->
 								<!-- ENDIF -->
 							<!-- END day.cdh -->
 						{day.TDE}

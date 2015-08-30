@@ -122,6 +122,9 @@
 .shday {
 	display:none;
 }
+.eventbg {
+	padding:0 3px;
+}
 @media only screen and (max-width: 870px), only screen and (max-device-width: 870px) {
 .hday {
 	display:none;

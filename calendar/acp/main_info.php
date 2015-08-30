@@ -2,7 +2,7 @@
 /**
 *
 * @package hjw calendar Extension
-* @copyright (c) 2014 calendar
+* @copyright (c) 2015 calendar
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -16,7 +16,7 @@ class main_info
 		return array(
 			'filename'	=> '\hjw\calendar\acp\main_module',
 			'title'		=> 'ACP_CALENDAR_TITLE',
-			'version'	=> '0.5.1',
+			'version'	=> '0.6.0',
 			'modes'		=> array(
 				'instructions'		=> array('title' => 'ACP_CALENDAR_INSTRUCTIONS',	'auth' => 'acl_a_board', 'cat' => array('ACP_CALENDAR_TITLE')),
 				'displayoptions'	=> array('title' => 'ACP_CALENDAR_DISPLAYOPTIONS',	'auth' => 'acl_a_board', 'cat' => array('ACP_CALENDAR_TITLE')),

@@ -118,6 +118,11 @@
 .sday {
 	display:none;
 }
+.eventbg {
+	border-radius:13px;
+	padding:0 3px;
+}
+
 @media only screen and (max-width: 500px), only screen and (max-device-width: 500px) {
 .day {
 	display:none;
