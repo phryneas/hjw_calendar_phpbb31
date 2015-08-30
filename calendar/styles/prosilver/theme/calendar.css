@@ -1,0 +1,142 @@
+#header_bevor {
+	background-color: #fff;
+    border-color: #e6e9ed;
+	border-radius: 8px;
+    margin: 0 auto;
+    max-width: 1152px;
+    padding: 0 15px;
+}
+@media only screen and (max-width: 1220px), only screen and (max-device-width: 1220px) {
+#header_bevor{
+    margin: 0 12px;
+}
+}
+#index_calendar .forumbg, #calendar .forumbg {
+	color: #FFFFFF;
+	overflow: hidden; 
+	padding:3px;
+}
+
+.cal_day {
+	background-color:#CADCEB;
+	text-align:left;
+	padding-left:3px;
+}
+.sat {
+	background-color:#D6E3ED;
+}	
+.sun {
+	background-color:#BACADA;
+}
+.today {
+	color:#FF0000 !important;
+	font-weight:bold;
+}
+.noday {
+	background-color:#DDDDDD;
+	background-image: url("./images/site_logo.gif");
+	background-size:contain;
+	background-repeat:no-repeat;
+	background-position:center center;
+	opacity: 0.2;
+}	
+.icon-cal {background-image: url("./images/icon_cal.gif");}
+.cal_month_title {
+	font-size:12px;
+	font-weight:bold;
+	height:20px;
+	text-align:center;
+	margin-top:3px;
+}
+.cal_month_title a {
+	color:#FFFFFF;
+}
+#calendar select {
+    background-color: #037ebb;
+    color: #ffffff;
+	border: none;
+}
+#index_calendar table, #calendar table {
+	table-layout: fixed;
+	width:100%;
+
+}
+#index_calendar th, #calendar th {
+	color:#FFFFFF;
+	width:14%;
+	padding:3px;
+	white-space: nowrap;
+	overflow:hidden;
+}
+#index_calendar td, #calendar td {
+	color: #105289;
+	border: 3px solid #12A3EB;
+	padding:3px;
+	white-space: nowrap;
+	overflow:hidden;
+	height:60px;
+	vertical-align:top;
+}
+.participants table.table1 thead th, .participants table.table1 tbody tr {
+    color: #105289;
+	border:none;
+}
+.participants table.table1 td {
+	padding: 0 5px;
+}
+.participants {
+    color: #105289;
+	border: 2px solid #FFFFFF;
+	margin-top:15px;
+	padding:5px;
+	border-radius:7px;
+}
+.participants p{
+	margin:2px 0 5px;
+	font-weight:bold;
+}
+.registration {
+	width:400px;
+	max-width:100%;
+	text-align:center;
+	font-size:1em;
+	margin-top:10px;
+}
+.participants select, .participants input, .participants textarea {
+	border:none;
+	margin:3px; 
+	font-size:1.2em;
+}
+.participants fieldset, .participants dl{
+	margin:0px;
+}
+.participants textarea{
+	height:20px;
+	width:400px;
+	max-width:100%;
+}
+.sday {
+	display:none;
+}
+@media only screen and (max-width: 500px), only screen and (max-device-width: 500px) {
+.day {
+	display:none;
+}
+.sday {
+	display:inline;
+}
+}
+.hday {
+	margin-left:10px;
+}
+.shday {
+	display:none;
+}
+@media only screen and (max-width: 870px), only screen and (max-device-width: 870px) {
+.hday {
+	display:none;
+}
+.shday {
+	display:inline;
+}
+}

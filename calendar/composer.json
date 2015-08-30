@@ -1,0 +1,30 @@
+{
+	"name": "hjw/calendar",
+	"type": "phpbb-extension",
+	"description": "Calendar for phpBB >=3.1.4",
+	"homepage": "http://calendar.zoo-am-ring.de/",
+	"version": "0.5.1",
+	"time": "2015-08-23",
+	"license": "GPL-2.0",
+	"authors": [{
+			"name": "Hermann Joseph Wischmann",
+			"username": "hjw",
+			"email": "hjw@killifisch.info",
+			"homepage": "http://calendar.zoo-am-ring.de/",
+			"role": "Lead Developer"
+		}],
+	"require": {
+		"php": ">=5.3.3"
+	},
+	"extra": {
+		"display-name": "Calendar",
+		"soft-require": {
+			"phpbb/phpbb": ">=3.1.4,<3.2.*@dev"
+		},
+		"version-check": {
+			"host": "calendar.zoo-am-ring.de",
+			"directory": "/extensions",
+			"filename": "hjw_calendar.json"
+		}
+	}
+}

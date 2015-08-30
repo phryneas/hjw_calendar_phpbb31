@@ -1,0 +1,58 @@
+<!-- IF not S_IS_BOT and S_USER_LOGGED_IN || S_IS_BOT and S_CALENDAR_FOR_GUESTS || !S_USER_LOGGED_IN and S_CALENDAR_FOR_GUESTS -->
+	<!-- INCLUDE overall_header.html -->
+	<div id="calendar">
+		<div class="forumbg">
+			<div class="inner">
+				<div class="cal_month_title">
+					<form action="{U_CALENDAR}" method="POST">
+						<a href="{PREVIOUS}">&lt;&lt;</a>
+						<select name="newmonth" size="1" onchange="this.form.submit();"> 
+							<!-- BEGIN month -->
+								{month.SELECT}
+							<!-- END month -->
+						</select>
+						<select name="newyear" size="1" onchange="this.form.submit();"> 
+							<!-- BEGIN year -->
+								{year.SELECT}
+							<!-- END year -->
+						</select>
+						<a href="{NEXT}">&gt;&gt;</a>
+					</form>	
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th><span class="day">{MONDAY}</span><span class="sday">{MON}</span></th>
+							<th><span class="day">{TUESDAY}</span><span class="sday">{TUE}</span></th>
+							<th><span class="day">{WEDNESDAY}</span><span class="sday">{WED}</span></th>
+							<th><span class="day">{THURSDAY}</span><span class="sday">{THU}</span></th>
+							<th><span class="day">{FRIDAY}</span><span class="sday">{FRI}</span></th>
+							<th><span class="day">{SATURDAY}</span><span class="sday">{SAT}</span></th>
+							<th><span class="day">{SUNDAY}</span><span class="sday">{SUN}</span></th>
+						</tr>
+					</thead>
+					<tbody>
+					<!-- BEGIN day -->
+						<!-- IF !day.INDEX -->
+							{day.TD}			
+							<div class="cal_day">{day.DATE}
+								<!-- BEGIN day.cdh -->
+									{day.cdh.HDAY}
+									<!-- IF day.cdh.EVENT_NAME -->
+										<!-- IF day.cdh.LINK -->
+											<a style="color: #{day.cdh.COLOR}" title="{day.cdh.SUBJECT}" href="{day.cdh.LINK}">{day.cdh.EVENT_NAME}</a><br />
+										<!-- ELSE -->
+											<span style="color: #{day.cdh.COLOR}" title="{day.cdh.SUBJECT}">{day.cdh.EVENT_NAME}</span><br />
+										<!-- ENDIF -->
+									<!-- ENDIF -->
+								<!-- END day.cdh -->
+							{day.TDE}
+						<!-- ENDIF -->
+					<!-- END day -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>	
+	<!-- INCLUDE overall_footer.html -->
+<!-- ENDIF -->

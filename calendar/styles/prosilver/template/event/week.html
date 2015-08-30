@@ -1,0 +1,32 @@
+		<div id="index_calendar">
+			<div class="forumbg">
+				<table>
+					<thead>
+						<tr>
+							<!-- BEGIN weekday -->
+								<th>
+									<span class="day">{weekday.DAY}</span><span class="sday">{weekday.SDAY}</span>
+								</th>
+							<!-- END weekday -->
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN day -->
+							{day.TD}	
+							<div class="cal_day">{day.DATE}	
+								<!-- BEGIN day.cdh -->
+									{day.cdh.HDAY}
+									<!-- IF day.cdh.EVENT_NAME -->
+										<!-- IF day.cdh.LINK -->
+											<a style="color: #{day.cdh.COLOR}" title="{day.cdh.SUBJECT}" href="{day.cdh.LINK}">{day.cdh.EVENT_NAME}</a><br />
+										<!-- ELSE -->
+											<div style="color: #{day.cdh.COLOR}" title="{day.cdh.SUBJECT}">{day.cdh.EVENT_NAME}</div><br />
+										<!-- ENDIF -->
+									<!-- ENDIF -->
+								<!-- END day.cdh -->
+							{day.TDE}
+						<!-- END day -->	
+					</tbody>
+				</table>
+			</div>
+		</div>

@@ -1,0 +1,132 @@
+#header_bevor {
+	background-color: #fff;
+    border-color: #e6e9ed;
+	border-radius: 8px;
+    margin: 0 auto;
+    max-width: 1152px;
+    /*min-width: 625px;*/
+    padding: 0 15px;
+}
+@media only screen and (max-width: 1220px), only screen and (max-device-width: 1220px) {
+#header_bevor{
+    margin: 0 12px;
+}
+}
+#index_calendar {
+	width:100%;
+	margin:0px 0 10px;
+}
+#index_calendar .forumbg, #calendar .forumbg {
+	color: #FFFFFF;
+	overflow: hidden; 
+	padding:3px;
+}
+#index_calendar .bg1, #calendar .bg1 {
+	background-color: #ececec;
+    padding: 4px;
+}
+.cal_day {
+	background-color:#CADCEB;
+	text-align:left;
+	padding-left:3px;
+}
+.sat {
+	background-color:#D6E3ED;
+}	
+.sun {
+	background-color:#BACADA;
+}
+.today {
+	color:#FF0000 !important;
+	/*font-weight:bold;*/
+}
+.noday {
+	background-color:#DDDDDD;
+	background-image: url("./images/site_logo.gif");
+	background-size:contain;
+	background-repeat:no-repeat;
+	background-position:center center;
+	opacity: 0.2;
+}	
+.cal_month_title {
+	font-size:12px;
+	font-weight:bold;
+	height:20px;
+	text-align:center;
+	margin-top:3px;
+}
+#calendar select {
+    background-color: #1073A5;
+	background-image: url("./images/cellpic3.gif");
+    color: #ffa34f;
+	font-weight:bold;
+	border: none;
+}
+#index_calendar table, #calendar table {
+	table-layout: fixed;
+	border-collapse:collapse;
+	width:100%;
+
+}
+#index_calendar th, #calendar th {
+	width:14%;
+	padding:3px;
+	white-space: nowrap;
+	overflow:hidden;
+}
+#index_calendar td, #calendar td {
+	/*background-color:#ECF3F7;*/
+	/*color: #105289;*/
+	border: 1px solid #A9B8C2;
+	padding:3px;
+	white-space: nowrap;
+	overflow:hidden;
+	height:60px;
+	text-align:left;
+	vertical-align:top;
+}
+.participant {
+	width:100%;
+	border:1px solid #a9b8c2;
+	padding:0;
+}
+.participant th{
+	width:100%;
+	color:#323d4f;
+	font-weight:normal;
+	background-image:none;
+	background-color: transparent;
+	text-align:center;
+	border-bottom:1px solid #a9b8c2;
+	padding:2px;
+	
+}
+.participant textarea {
+	height:18px;
+	width:300px;
+}
+.sday {
+	display:none;
+}
+@media only screen and (max-width: 500px), only screen and (max-device-width: 500px) {
+.day {
+	display:none;
+}
+.sday {
+	display:inline;
+}
+}
+.hday {
+	margin-left:10px;
+}
+.shday {
+	display:none;
+}
+@media only screen and (max-width: 870px), only screen and (max-device-width: 870px) {
+.hday {
+	display:none;
+}
+.shday {
+	display:inline;
+}
+}

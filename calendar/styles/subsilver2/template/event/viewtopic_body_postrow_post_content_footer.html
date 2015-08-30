@@ -1,0 +1,104 @@
+<!-- IF not S_IS_BOT and S_USER_LOGGED_IN -->
+	<!-- IF postrow.LINK -->
+		<a href="{postrow.LINK}">
+			<table class="participant <!-- IF postrow.S_ROW_COUNT is odd -->row1<!-- ELSE -->row2<!-- ENDIF -->" style="width:100%;margin:20px 0 0 0;border:1px solid #a9b8c2">
+				<tr>
+					<td>
+						{postrow.ENTRY}
+					</td>
+				</tr>
+			</table>
+		</a>
+	<!-- ENDIF -->
+	<!-- IF postrow.PARTICIPANTS_ID -->
+		<table class="participant <!-- IF postrow.S_ROW_COUNT is odd -->row1<!-- ELSE -->row2<!-- ENDIF -->" style="width:100%;margin:20px 0 0 0;border:1px solid #a9b8c2">
+			<tr class="">
+				<td>
+					<!-- IF postrow.LIST -->
+						{L_PARTICIPANTS_LIST}  ( {L_CALENDAR_YES} / {L_CALENDAR_MB} / {L_CALENDAR_NO} ): {postrow.0.PARTICIPANTS_COUNT}
+					<!-- ENDIF  -->
+				</td>
+			</tr>
+			<tr class="">
+				<td>
+					<table class="participant">
+						<thead>
+							<tr>
+								<th style="width:20%;">{L_CALENDAR_USERS}</th>
+								<th style="width:10%;">{L_CALENDAR_NUMBER}</th>
+								<th style="width:10%;">{L_CALENDAR_PART}</th>
+								<th style="width:40%;">{L_CALENDAR_COMMENTS}</th>
+								<th style="width:20%;white-space:nowrap;">{L_CALENDAR_DATE}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- BEGIN postrow.LIST -->
+								<tr>
+									<td style="text-align:center;color:#{postrow.LISTE.PARTICIPANTS_COLOUR}">{postrow.LIST.PARTICIPANTS_USER}</td>
+									<td style="text-align:center;">{postrow.LIST.PARTICIPANTS_NUMBER}</td>
+									<td style="text-align:center;">{postrow.LIST.PARTICIPANTS_PART}</td>
+									<td style="text-align:center;">{postrow.LIST.PARTICIPANTS_COMMENTS}</td>
+									<td style="text-align:center;">{postrow.LIST.PARTICIPANTS_DATE}</td>
+								</tr>
+							<!-- BEGINELSE -->
+								<tr>
+									<td colspan="6">{L_CALENDAR_NO_ITEMS}</td>
+								</tr>
+							<!-- END postrow.LIST -->
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr class="">
+				<td>
+					<form method="post" action="{postrow.U_PARTICIPANTS}">
+						<table class="">
+							<tr>
+								<td>
+									<input type="hidden" name="participants_id" value="{postrow.POST_ID}">
+								</td>
+							</tr>
+							<tr>
+								<td style="width:300px">
+									{L_CALENDAR_ASK}
+								</td>
+								<td>
+									<select name="part" size="1" class="<!-- IF postrow.S_ROW_COUNT is odd -->row1<!-- ELSE -->row2<!-- ENDIF -->" >
+										<option value= "" selected="selected"> </option>
+										<option value= "yes" > {L_CALENDAR_YES}</option>
+										<option value= "no" > {L_CALENDAR_NO}</option>
+										<option value= "mb" > {L_CALENDAR_MB}</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td style="width:300px">
+									{L_CALENDAR_GROUP}
+								</td>
+								<td>
+									<input name="group" type="text" value="1" size="2" maxlength="2"  class="<!-- IF postrow.S_ROW_COUNT is odd -->row1<!-- ELSE -->row2<!-- ENDIF -->" >
+								</td>
+							</tr>
+							<tr>
+								<td style="width:300px">
+									{L_CALENDAR_COMMENTS}
+								</td>
+								<td>
+									<textarea class="comments <!-- IF postrow.S_ROW_COUNT is odd -->row1<!-- ELSE -->row2<!-- ENDIF -->" name="comments" ></textarea>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								</td>
+							<td>
+								<input class="button1 <!-- IF postrow.S_ROW_COUNT is odd -->row1<!-- ELSE -->row2<!-- ENDIF -->" type="submit" name="send" value="{L_CALENDAR_ENTER}" />&nbsp;
+							</td>
+							{S_FORM_TOKEN}
+							</tr>
+						</table>
+					</form>
+				</td>
+			</tr>
+		</table>
+	<!-- ENDIF -->
+<!-- ENDIF -->

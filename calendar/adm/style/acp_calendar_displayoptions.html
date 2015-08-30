@@ -1,0 +1,24 @@
+<!-- INCLUDE overall_header.html -->
+<h1>{L_ACP_CALENDAR_SETTINGS}</h1>
+<div style="width:660px;margin:10px 0 20px;"> 
+	<form action="{U_ACTION}" method="POST">
+		{L_ACP_CALENDAR_FOR_GUESTS} :&nbsp;
+		{L_NO} <input type="radio" name="calendar_for_guests" value="0" {CFG0} onchange="this.form.submit();"> &nbsp;
+		{L_YES} <input type="radio" name="calendar_for_guests" value="1" {CFG1} onchange="this.form.submit();"> 
+		<br /><br />
+		{L_ACP_BIRTHDAY_ON_CALENDAR} :&nbsp;
+		{L_NO} <input type="radio" name="birthday_on_calendar" value="0" {BOC0} onchange="this.form.submit();"> &nbsp;
+		{L_YES} <input type="radio" name="birthday_on_calendar" value="1" {BOC1} onchange="this.form.submit();"> 
+		
+		{L_ACP_CALENDAR_INSTRUCTIONS_TEXT_0}
+		<select name="week_on_index" size="1" onchange="this.form.submit();"> 
+			<!-- BEGIN weekblock -->
+				{weekblock.SELECT}
+			<!-- END weekblock -->
+		</select>
+		<br /><br />
+		{L_ACP_CALENDAR_NUMBER_OF_WEEKS}
+		<input type="number" min="1" name="number_of_weeks" value="{NUMBER_OF_WEEKS}" onchange="this.form.submit();" /> 
+	</form>
+</div>
+<!-- INCLUDE overall_footer.html -->
